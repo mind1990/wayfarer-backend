@@ -3,6 +3,7 @@ const router = express.Router();
 const ctrl = require('../../../controllers/index');
 const bcrypt = require('bcrypt');
 const User = require('../../../models/User');
+const jwt = require('jsonwebtoken');
 
 
 router.get('/', ctrl.user.index);
@@ -38,20 +39,29 @@ router.post('/signup', function(req, res) {
 	});
 });
 
-// Route for Sig
+// Route for Sigin
 router.post('/signin', function(req, res){
 	User.findOne({email: req.body.email})
 	.exec()
 	.then(function(user) {
 		bcrypt.compare(req.body.password, user.password, function(err, result){
-			if(err) {
+			if (err) {
 				return res.status(401).json({
 					failed: 'Unauthorized Access'
 				});
 			}
-			if(result) {
+			if (result) {
+				const JWTToken = jwt.sign({
+					email: user.email,
+					_id: user._id 
+				}, 
+				'secret', 
+				{ 
+					expiresIn: '2h' 
+				});
 				return res.status(200).json({
-					success: 'Welcome to the JWT Auth'
+					success: 'Welcome to the JWT Auth',
+					token: JWTToken
 				});
 			}
 			return res.status(401).json({
