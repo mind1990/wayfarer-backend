@@ -5,7 +5,6 @@ const postRouter = require('./config/api/post/routes');
 const userRouter = require('./config/api/user/routes');
 
 
-
 //--------------- Middleware ------------------//
 
 // CORES(Cross Origin Resource Sharing)
@@ -27,6 +26,12 @@ app.use(express.json());
 // HTML endpoints
 app.get('/', (req, res) => res.send('Hello world'));
 
+app.get('/checking', function(req, res) {
+	res.json({
+		'Tutorial': 'Welcome to Hello world'
+	});
+});
+
 // API endpoints
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
@@ -36,4 +41,14 @@ app.use('/api/post/:post_id', postRouter);
 
 
 
+
+
 app.listen(port, () => console.log(`Server started on port ${port}`));
+
+
+
+
+
+
+
+

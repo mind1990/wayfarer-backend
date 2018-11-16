@@ -9,6 +9,7 @@ const seed = [
 		password: 'brock',
 		firstname: 'kenneth',
 		lastname: 'bushman',
+		email: 'irockkennybrock@gmail.com',
 		currentcity: 'San Francisco',
 		datejoin: ''
 	}
